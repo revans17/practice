@@ -1,23 +1,10 @@
 import java.util.*;
 public class test{
-      public static void main(String args[]){
-     //      System.out.println(Integer.toBinaryString(23423414));
-     // }
-     int[] nums = new int[] {7, 6, 4, 3, 1};
-		int[] data = twoSum(nums, 11);
-     System.out.println(Arrays.toString(data));
-}
-
-public static int[] twoSum(int[] nums, int k) {
-    Map<Integer, Integer> map = new HashMap<>();
-    for (int i = 0; i < nums.length; i++) {
-        int complement = k - nums[i];
-        if (map.containsKey(complement)) {
-            return new int[] { map.get(complement), i };
-        }
-        map.put(nums[i], i);
-    }
-    throw new IllegalArgumentException("No two sum solution");
-}
-
+      public static void main(String args[]){	  
+//    	  System.out.println(Solution.sumOfBinary("111001", "1110"));
+//    	  System.out.println(Integer.toBinaryString(Solution.sumOfBinary("111001", "1110")));
+//    	  System.out.println(Solution.addTheBinaryNumbers("111001", "1110"));
+    	  int arr[] = {1,12,3,2,124,5,34,4};
+    	  System.out.println(Solution.findLongestConseqSubseq(arr, arr.length));
+      }
 }
