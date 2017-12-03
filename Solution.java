@@ -1,5 +1,5 @@
 import  java.util.*;
-class Solution {
+public class Solution {
 public static boolean isPalindrome(String s) {
         int n=s.length();
         if(n<2) return true;
@@ -30,19 +30,29 @@ public static boolean isPalindrome(String s) {
         }
         return true;
     }
-public static boolean isSPalindrom(String word){
-     char[] theWord = word.toCharArray();
-        int i1 = 0;
-        int i2 = theWord.length - 1;
-        while (i2 > i1) {
-            if (theWord[i1] != theWord[i2]) {
-                return false;
+//O(n) time and O(1) space.
+public static boolean isAPalindrome(String s) {
+        if(s.length()<2)return true;
+        s = s.toLowerCase();
+        int start=0,end=s.length()-1;
+        while(start<end){
+            char first = s.charAt(start);
+            while(start<end && isNotLetterDigit(first)){
+                first = s.charAt(++start);
             }
-            ++i1;
-            --i2;
+            char last = s.charAt(end);
+            while(start<end && isNotLetterDigit(last)){
+                last = s.charAt(--end);
+            }
+            if(first!=last)break;
+            ++start;
+            --end;
         }
-        return true;
+        return start>=end;
     }
+public static boolean isNotLetterDigit(char c){
+        return !((c>='0' && c<='9') || (c>='a' && c<='z'));
+}
 public static boolean isValidPalindrome(String str) {
     return str.equals(new StringBuilder(str).reverse().toString());
 }
@@ -68,6 +78,7 @@ public static int missingNumber(int[] nums) {
 The function assumes than k1 < k2 */
 public static void printKeysOfBSTInRange(TreeNode node, int k1, int k2) {
      /* base case */
+     int output = 0;
      if (node == null) {
           return;
      }
@@ -79,6 +90,7 @@ public static void printKeysOfBSTInRange(TreeNode node, int k1, int k2) {
      }
      /* if root's data lies in range, then prints root's data */
      if (k1 <= node.val && k2 >= node.val) {
+          output += node.val;
           System.out.print(node.val + " ");
      }
      /* If root->data is smaller than k2, then only we can get o/p keys
@@ -87,6 +99,31 @@ public static void printKeysOfBSTInRange(TreeNode node, int k1, int k2) {
           printKeysOfBSTInRange(node.right, k1, k2);
      }
  }
+//Given a full binary tree, find the longest path between any  two nodes.
+//(Essentially, find the diameter of a full binary tree.)
+public static int Diameter(Node root) {
+       if (root != null) {
+            // get the left and right subtree height
+            int leftH = getHeight(root.left);
+            int rightH = getHeight(root.right);
+            // get the left diameter and right diameter recursively.
+            int leftDiameter = Diameter(root.left);
+            int rightDiameter = Diameter(root.right);
+            // get the max leftsubtree, rightsubtree, longest path goes through
+            // root.
+            return getMax(leftH + rightH + 1, leftDiameter, rightDiameter);
+       }
+       return 0;
+ }
+public static int getHeight(Node root) {
+      if (root != null) {
+           return 1 + Math.max(getHeight(root.left), getHeight(root.right));
+      }
+      return 0;
+}
+public static int getMax(int a, int b, int c) {
+      return Math.max(a, Math.max(b, c));
+}
 //Best Time to Buy and Sell Stock
 public static int maxProfit(int prices[]) {
      int minprice = Integer.MAX_VALUE;
@@ -162,7 +199,7 @@ public static boolean isItNumeric(String str) {
   return true;
 }
 //Given an array of positive ints and an integer K, determine if a subsequence in the array sums to K. Solve in linear time.
-public int[] twoSum(int[] nums, int k) {
+public static int[] twoSum(int[] nums, int k) {
     Map<Integer, Integer> map = new HashMap<>();
     for (int i = 0; i < nums.length; i++) {
         int complement = k - nums[i];
@@ -186,7 +223,7 @@ public static int fib(int n){
      return b;
 }
 //Word Search using a DFS.
-public boolean exist(char[][] board, String word) {
+public static boolean exist(char[][] board, String word) {
         boolean flag = false;
         for(int i=0;i<board.length;i++){
             for(int j=0;j<board[i].length;j++){
@@ -195,7 +232,7 @@ public boolean exist(char[][] board, String word) {
         }
     return flag;
 }
-public boolean dfs(char[][]board, String word, int i, int j, int idx){
+public static boolean dfs(char[][]board, String word, int i, int j, int idx){
     if(i<0 || i>board.length-1 || j<0 || j>board[i].length-1)
         return false;
     char ch = board[i][j];
@@ -217,7 +254,3 @@ public boolean dfs(char[][]board, String word, int i, int j, int idx){
     board[i][j] = ch;
     return flag;
     }
-
-
-
-}
