@@ -1,4 +1,4 @@
-import  java.util.*;
+import java.util.*;
 public class Solution {
 public static boolean isPalindrome(String s) {
         int n=s.length();
@@ -37,10 +37,12 @@ public static boolean isAPalindrome(String s) {
         int start=0,end=s.length()-1;
         while(start<end){
             char first = s.charAt(start);
+            //We could use !Character.isLetterOrDigit(first)
             while(start<end && isNotLetterDigit(first)){
                 first = s.charAt(++start);
             }
             char last = s.charAt(end);
+            //Here too !Character.isLetterOrDigit(last)
             while(start<end && isNotLetterDigit(last)){
                 last = s.charAt(--end);
             }
@@ -101,7 +103,7 @@ public static void printKeysOfBSTInRange(TreeNode node, int k1, int k2) {
  }
 //Given a full binary tree, find the longest path between any  two nodes.
 //(Essentially, find the diameter of a full binary tree.)
-public static int Diameter(Node root) {
+public static int Diameter(TreeNode root) {
        if (root != null) {
             // get the left and right subtree height
             int leftH = getHeight(root.left);
@@ -115,7 +117,7 @@ public static int Diameter(Node root) {
        }
        return 0;
  }
-public static int getHeight(Node root) {
+public static int getHeight(TreeNode root) {
       if (root != null) {
            return 1 + Math.max(getHeight(root.left), getHeight(root.right));
       }
@@ -254,3 +256,4 @@ public static boolean dfs(char[][]board, String word, int i, int j, int idx){
     board[i][j] = ch;
     return flag;
     }
+}
