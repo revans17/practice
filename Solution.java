@@ -215,7 +215,7 @@ public static int[] twoSum(int[] nums, int k) {
         }
         map.put(nums[i], i);
     }
-    throw new IllegalArgumentException("No two sum solution");
+    return new int[] {0, 0};
 }
 //Given a fibonacci series, write code to return the element at nth index.
 public static int fib(int n){
