@@ -56,7 +56,13 @@ public static boolean isNotLetterDigit(char c){
         return !((c>='0' && c<='9') || (c>='a' && c<='z'));
 }
 public static boolean isValidPalindrome(String str) {
-    return str.equals(new StringBuilder(str).reverse().toString());
+     if (str.equals(new StringBuilder(str).reverse().toString())) {
+          return true;
+     }
+     else{
+          return false;
+     }
+    //return str.equals(new StringBuilder(str).reverse().toString());
 }
 /* returns true if given search tree is binary
 search tree (efficient version) */
@@ -76,13 +82,12 @@ public static int missingNumber(int[] nums) {
      }
      return missing;
 }
-/* The functions prints all the keys which in the given range [k1..k2].
-The function assumes than k1 < k2 */
-public static void printKeysOfBSTInRange(TreeNode node, int k1, int k2) {
+/* The functions prints all the keys  in the given range [k1..k2].
+The function assumes that k1 < k2 */
+public static int printKeysOfBSTInRange(TreeNode node, int k1, int k2) {
      /* base case */
-     int output = 0;
      if (node == null) {
-          return;
+          return 0 ;
      }
      /* Since the desired o/p is sorted, recurse for left subtree first
      If root->data is greater than k1, then only we can get o/p keys
@@ -92,14 +97,17 @@ public static void printKeysOfBSTInRange(TreeNode node, int k1, int k2) {
      }
      /* if root's data lies in range, then prints root's data */
      if (k1 <= node.val && k2 >= node.val) {
-          output += node.val;
-          System.out.print(node.val + " ");
+          if (node.isLeaf(node)) return node.val;
+          else return node.val + printKeysOfBSTInRange(node.left, k1, k2) + printKeysOfBSTInRange(node.right, k1, k2);
+
+          //System.out.print(node.val + " ");
      }
      /* If root->data is smaller than k2, then only we can get o/p keys
      in right subtree */
      if (k2 > node.val) {
           printKeysOfBSTInRange(node.right, k1, k2);
      }
+     return 0;
  }
 //Given a full binary tree, find the longest path between any  two nodes.
 //(Essentially, find the diameter of a full binary tree.)
@@ -162,14 +170,10 @@ public static String addTheBinaryNumbers(String num1, String num2) {
     int carry = 0;
     while (p1 >= 0 || p2 >= 0) {
        int sum = carry;
-       if (p1 >= 0) {
-            sum += num1.charAt(p1) - '0';
-            p1--;
-       }
-       if (p2 >= 0) {
-            sum += num2.charAt(p2) - '0';
-            p2--;
-       }
+       if (p1 >= 0)
+            sum += num1.charAt(p1--) - '0';
+       if (p2 >= 0)
+            sum += num2.charAt(p2--) - '0';
        carry = sum >> 1;
        sum = sum & 1;
        buf.append(sum == 0 ? '0' : '1');
@@ -200,7 +204,8 @@ public static boolean isItNumeric(String str) {
   }
   return true;
 }
-//Given an array of positive ints and an integer K, determine if a subsequence in the array sums to K. Solve in linear time.
+//Given an array of positive ints and an integer K, determine if a subsequence
+//in the array sums to K. Solve in linear time.
 public static int[] twoSum(int[] nums, int k) {
     Map<Integer, Integer> map = new HashMap<>();
     for (int i = 0; i < nums.length; i++) {
@@ -283,6 +288,35 @@ public static int findLongestConseqSubseq(int arr[],int n){
     }
     return ans;
 }
-
+//Finds all paths of the BST
+public static List<String> binaryTreePaths(TreeNode root) {
+        List<String> values = new ArrayList<String>();
+        if(root == null) return values;
+        util(values, root, "");
+        return values;
+    }
+public static void util(List<String> values, TreeNode root, String current) {
+        if(root.right!=null)
+            util(values, root.right, current+ root.val + "->");
+        if(root.left!=null)
+            util(values, root.left,current + root.val + "->");
+        if(root.right == null && root.left == null) values.add(current + root.val);
+    }
+//Given a char array representing tasks CPU need to do.
+public static int leastInterval(char[] tasks, int n) {
+     int[] map = new int[26];
+     for (char c: tasks)
+          map[c - 'A']++;
+     Arrays.sort(map);
+     int max_val = map[25] - 1, idle_slots = max_val * n;
+     for (int i = 24; i >= 0 && map[i] > 0; i--) {
+          idle_slots -= Math.min(map[i], max_val);
+     }
+     return idle_slots > 0 ? idle_slots + tasks.length : tasks.length;
+     }
+//preforms an xor to determine where the bit is different.
+public static int hammingDistance(int x, int y) {
+     return Integer.bitCount(x^y);
+}
 
 }
